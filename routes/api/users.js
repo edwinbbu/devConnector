@@ -3,6 +3,7 @@ const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
+const validateRegisterInput = require("../../validator/register");
 
 const keys = require("../../config/keys");
 const User = require("../../models/User");
@@ -11,6 +12,9 @@ const router = express.Router();
 
 // Register User
 router.post("/register", (req, res) => {
+
+    const { error, isValid } = validateRegisterInput(req.body);
+
     User.findOne({ email: req.body.email }).then(user => {
         if (user) {
             return res.status(400).json({ email: "Email already exists" });
