@@ -4,7 +4,7 @@ const isEmpty = require("./isEmpty");
 module.exports = function validateRegisterInput(data) {
     let errors = {}
 
-    if (!validator.isLenght(data.name, { min: 2, max: 30 })) {
+    if (!validator.isLength(data.name, { min: 2, max: 30 })) {
         errors.name = "Name must be between 2 and 30 characters";
     }
     return {

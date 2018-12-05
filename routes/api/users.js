@@ -13,7 +13,11 @@ const router = express.Router();
 // Register User
 router.post("/register", (req, res) => {
 
-    const { error, isValid } = validateRegisterInput(req.body);
+    const { errors, isValid } = validateRegisterInput(req.body);
+
+    if (!isValid) {
+        return res.status(400).json(errors);
+    }
 
     User.findOne({ email: req.body.email }).then(user => {
         if (user) {
