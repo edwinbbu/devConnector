@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import axios from "axios";
+
 class Register extends Component {
   constructor() {
     super();
@@ -26,6 +28,13 @@ class Register extends Component {
       password2: this.state.password2
     };
     console.log("new User:", newUser);
+
+    axios
+      .post("/api/users/register", newUser)
+      .then(result => {
+        console.log("result from server:", result.data);
+      })
+      .catch(err => console.log(err.response.data));
   }
 
   render() {
