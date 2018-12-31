@@ -34,7 +34,7 @@ class Register extends Component {
       .then(result => {
         console.log("result from server:", result.data);
       })
-      .catch(err => console.log(err.response.data));
+      .catch(err => this.setState({ errors: err.response.data }));
   }
 
   render() {
