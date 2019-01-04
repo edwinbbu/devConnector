@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 import classnames from "classnames";
+import { connect } from "react-redux";
+import { registerUser } from "../../actions/authActions";
 
 class Register extends Component {
   constructor() {
@@ -29,12 +31,13 @@ class Register extends Component {
     };
     console.log("new User:", newUser);
 
-    axios
-      .post("/api/users/register", newUser)
-      .then(result => {
-        console.log("result from server:", result.data);
-      })
-      .catch(err => this.setState({ errors: err.response.data }));
+    this.props.registerUser(newUser);
+    // axios
+    //   .post("/api/users/register", newUser)
+    //   .then(result => {
+    //     console.log("result from server:", result.data);
+    //   })
+    //   .catch(err => this.setState({ errors: err.response.data }));
   }
 
   render() {
@@ -124,4 +127,7 @@ class Register extends Component {
   }
 }
 
-export default Register;
+export default connect(
+  null,
+  { registerUser }
+)(Register);
