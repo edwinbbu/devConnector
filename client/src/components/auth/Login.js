@@ -25,8 +25,18 @@ class Login extends Component {
             password: this.state.password
         };
         console.log("user:", user);
+        this.props.loginUser(user);
+    }
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.auth.isAuthenticated) {
+            this.props.history.push("/dashboard");
+        }
+        if (nextProps.errors) {
+            this.setState({ errors: nextProps.errors });
+        }
     }
     render() {
+        const { errors } = this.state;
         return (
             <div className="login">
                 <div className="container">

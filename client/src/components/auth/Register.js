@@ -42,7 +42,7 @@ class Register extends Component {
     }
     render() {
         const { errors } = this.state;
-
+        console.log("err:", errors);
         return (
             <div className="register">
                 <div className="container">
