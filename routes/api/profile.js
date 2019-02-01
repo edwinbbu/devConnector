@@ -68,4 +68,53 @@ router.post("/", passport.authenticate("jwt", { session: false }), (req, res) =>
         }
     });
 });
+
+//GET api/profile/handle/:handle
+router.get("/handle/:handle", (req, res) => {
+    Profile.findOne({ handle: req.params.handle })
+        .populate("user", ["name", "avatar"])
+        .then(profile => {
+            if (!profile) {
+                errors.noprofile = "There is no profile for this user";
+                return res.status(404).json(errors);
+            }
+            res.json(profile);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+});
+
+//GET api/profile/user/:id
+router.get("/user/:id", (req, res) => {
+    Profile.findOne({ user: req.params.id })
+        .populate("user", ["name", "avatar"])
+        .then(profile => {
+            if (!profile) {
+                errors.noprofile = "There is no profile for this user";
+                return res.status(404).json(errors);
+            }
+            res.json(profile);
+        })
+        .catch(err => {
+            res.status(404).json("There is no profile for this user");
+        });
+});
+
+//list profile
+router.get("/all", (req, res) => {
+    Profile.find({})
+        .populate("user", ["name", "avatar"])
+        .then(profiles => {
+            if (!profiles) {
+                errors.noprofile = "There is no profiles";
+                return res.status(404).json(errors);
+            }
+            res.json(profiles);
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        });
+});
+
 module.exports = router;
